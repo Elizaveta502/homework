@@ -20,7 +20,8 @@ public:
 		try
 		{
 			if (b == 0)
-				throw  "The denominator must not be zero";
+				//throw  "The denominator must not be zero";
+				throw invalid_argument{ "Знаменатель=0" };
 			zn = b;
 		}
 
@@ -28,6 +29,7 @@ public:
 		{
 			cerr << "Error: " << exception << endl;
 		}
+		
 
 		cout << "Конструктор с параметрами успешно сработал!" << "(" << this << ")" << endl << endl;
 		
@@ -56,9 +58,21 @@ public:
 
 	void setZn(int a) //установка знаменателя
 	{
-		if (a!=0)
+	/*	if (a!=0)
 		zn = a;
-		else cout << "Знаменатель не может быть равен нулю!"<< endl;
+		else cout << "Знаменатель не может быть равен нулю!"<< endl;*/
+		try
+		{
+			if (a == 0)
+				//		throw  "The denominator must not be zero";
+				throw invalid_argument{ "Знаменатель=0" };
+				zn = a;
+		}
+
+		catch (const char* exception)
+		{
+			cerr << "Error: " << exception << endl;
+		}
 	}
 
 	void Print() //функция для вывода числителя и знаменателя на экран
@@ -202,6 +216,9 @@ int main()
 
 	return 0;
 }
+
+
+
 
 
 
