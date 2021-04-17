@@ -17,7 +17,7 @@ public:
 	RNum(int a, int b) //описание конструктора с параметрами
 	{
 		ch = a;
-		try
+	/*	try
 		{
 			if (b == 0)
 				//throw  "The denominator must not be zero";
@@ -28,7 +28,8 @@ public:
 		catch (const char* exception)
 		{
 			cerr << "Error: " << exception << endl;
-		}
+		}*/
+		zn = b.setZn;
 		
 
 		cout << "Конструктор с параметрами успешно сработал!" << "(" << this << ")" << endl << endl;
@@ -69,10 +70,6 @@ public:
 				zn = a;
 		}
 
-		catch (const char* exception)
-		{
-			cerr << "Error: " << exception << endl;
-		}
 	}
 
 	void Print() //функция для вывода числителя и знаменателя на экран
