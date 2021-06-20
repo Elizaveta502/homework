@@ -11,9 +11,6 @@ using namespace std;
 
 class String
 {
-private:
-	char *string1;
-	int length;
 
 protected:
 	void set_string(char * string1)
@@ -31,7 +28,8 @@ protected:
 	{
 		this->length = length;
 	}
-
+	char *string1;
+	int length;
 
 public:
 	char * get_string()
@@ -48,7 +46,6 @@ public:
 
 	String(char *String)
 	{
-		//delete string1;
 		string1 = new char[strlen(String) + 1];
 		length = strlen(String);
 		strcpy_s(string1, strlen(String) + 1, String);
@@ -92,7 +89,7 @@ public:
 	{
 		delete[]string1;
 		length = other.length;
-		string1 = new char[100];
+		string1 = new char[this->length];
 		strcpy_s(string1, strlen(string1), other.string1);
 		return *this;
 	}
@@ -111,9 +108,6 @@ public:
 
 class ID_String : public String
 {
-private:
-	char* string1;
-	int length;
 
 public:
 	ID_String()
@@ -149,23 +143,15 @@ public:
 		cout << "ID_String: вызван деструктор" << endl;
 	}
 
-	/*	ID_String& operator = (const ID_String& other)
-		{
-			this->string1 = other.string1;
-			this->length = other.length;
-			return *this;
-		}*/
 
 	bool operator > (const ID_String& other)
 	{
-		//return this->length > other.length;
 		if (strcmp(this->string1, other.string1) > 0) return true;
 		else return false;
 	}
 
 	bool operator < (const ID_String& other)
 	{
-		//return this->length < other.length;
 		if (strcmp(this->string1, other.string1) < 0) return true;
 		else return false;
 	}
@@ -190,9 +176,6 @@ public:
 
 class Des_String : public String
 {
-private:
-	char *string1;
-	int length;
 
 public:
 
@@ -263,13 +246,6 @@ public:
 		cout << "Des_String: вызван деструктор" << endl;
 	}
 
-	/*	Des_String& operator = (const Des_String& other)
-		{
-			this->string1 = other.string1;
-			this->length = other.length;
-			return *this;
-		}*/
-
 	bool int_opr()
 	{
 		int chislo;
@@ -285,52 +261,206 @@ public:
 			else if ((chislo = atoi(this->string1)) < (-32676)) return false;
 			else return true;
 		}
+	}
 
-
-			/*	char* string2 = get_string();
-				int l = get_length(), chislo;
-				if (string1[0] == '+')
-				{
-					l--;
-					if (l > 5) return false;
-					else if ((chislo = atoi(string2)) > 32676) return false;
-					else return true;
-				}
-				else if (string1[0] == '-')
-				{
-					l--;
-					if (l > 10) return false;
-					else if ((chislo = atoi(string2)) < (-32676)) return false;
-					else return true;
-				}*/
-
+	void reverse(char* string1)
+	{
+		int i = 0;
+		int j = strlen(string1) - 1;
+		char x;
+		while (j - i > 0) {
+			x = string1[i];
+			string1[i] = string1[j];
+			string1[j] = x;
+			i++;
+			j--;
 		}
+	}
 
-		Des_String operator - (Des_String& str)
+
+		Des_String operator-(const Des_String& str1, const Des_String& str2)
 		{
-			/*	char * str1 = get_string(), *str2 = str.get_string();
-				int a, b, otv;
-				a = atoi(str1);
-				b = atoi(str2);
+			int x = str1.string1[0] == '-' || str1.string1[0] == '+';
+			char* fir = new char[strlen(str1.string1) - x + 1];
+			for (int i = x; i <= strlen(str1.string1); i++)
+			{
+				fir[i - x] = str1.string1[i];
+			}
+			reverse(str1);
 
-				return (a-b);*/
+			x = str2.string1[0] == '+' str2.string2 == '-';
+			char* sec = new char[strlen(str2.string1) - x + 1];
+			for (int i = x; i <= strlen(str2.string1); i++)
+			{
+				sec[i - x] = str2.string1[i];
+			}
+			reverse(str2);
 
-			int a;
-			a = strtol(this->string1, NULL, 10);
-			a -= strtol(str.string1, NULL, 10);
-			_itoa_s(a, this->string1, length, 10);
-			return string1;
+			char *new_s = new char[strlen(str1.string1) + strlen(str2.string1) + 2];
+			char l;
+			if (str1.string1[0] == '-' || str1.string1[0] == '+')
+			{
+				l = str1.string[0];
+			}
+			else { l = '+'; }
+			char r;
+			if (str2.string1[0] == '-' || str2.string1[0] == '+')
+			{
+				l = str2.string[0];
+			}
+			else { r = '+'; }
+
+			int i=0;
+
+
+			if (l == '+' && r == '+')
+			{
+				bool rem = 0;
+				int curr = 0;
+				i = 0;
+				while (i < strlen(str1.string1) || i < strlen(str2.string1))
+				{
+					int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+					int str2 = i < strlen(sec) ? fir[i] - '0' : 0;
+					curr = fir - sec - rem;
+					rem = 0;
+					if (curr < 0)
+					{
+						curr += 10;
+						rem++;
+					}
+					new_s[i] = curr + '0';
+					i++;
+				}
+				if (rem)
+				{
+					rem = 0;
+					curr = 0;
+					i = 0;
+					while (i < strlen(fir) || i < strlen(sec))
+					{
+						int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+						int str2 = i < strlen(sec) ? sec[i] - '0' : 0;
+						curr = sec - fir - rem;
+						rem = 0;
+						if (curr < 0)
+						{
+							curr += 10;
+							rem++;
+						}
+						new_s[i] = curr + '0';
+						i++;
+					}
+					new_s[i] = '-';
+					i++;
+					}
+				}
+
+
+			else if (l == '-' || r == '-')
+			{
+				bool rem = 0;
+				int curr = 0;
+				i = 0;
+				while (i < strlen(fir) || i < strlen(sec))
+				{
+					int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+					int str2 = i < strlen(sec) ? fir[i] - '0' : 0;
+					curr = fir - sec - rem;
+					rem = 0;
+					if (curr < 0)
+					{
+						curr += 10;
+						rem++;
+					}
+					new_s[i] = curr + '0';
+					i++;
+
+				}
+				if (rem)
+				{
+					rem = 0;
+					curr = 0;
+					i = 0;
+					while (i < strlen(fir) || i < strlen(sec))
+					{
+						int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+						int str2 = i < strlen(sec) ? sec[i] - '0' : 0;
+						curr = fir - sec - rem;
+						rem = 0;
+						if (curr < 0)
+						{
+							curr += 10;
+							rem++;
+						}
+						new_s[i] = curr + '0';
+						i++;
+					}
+					new_s[i] = '-';
+					i++;
+				}
+			}
+
+			
+			else if (l == '-' && r == '+')
+			{
+				bool rem = 0;
+				int curr = 0;
+				i = 0;
+				while (i < strlen(fir) || i < strlen(sec))
+				{
+					int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+					int str2 = i < strlen(sec) ? sec[i] - '0' : 0;
+					curr = fir + sec + rem;
+					rem = 0;
+					new_s[i] = curr % 10 + '0';
+					rem = curr >= 10;
+					i++;
+				}
+				if (rem)
+				{
+					new_s[i] = rem + '0';
+					i++;
+				}
+				new_s[i] = '-';
+				i++;
+			}
+
+			else if (l == '+' && r == '-')
+			{
+			bool rem = 0;
+			int curr = 0;
+			i = 0;
+			while (i < strlen(fir) || i < strlen(sec))
+			{
+				int str1 = i < strlen(fir) ? fir[i] - '0' : 0;
+				int str2 = i < strlen(sec) ? sec[i] - '0' : 0;
+				curr = fir + sec + rem;
+				rem = 0;
+				new_s[i] = curr % 10 + '0';
+				rem = curr >= 10;
+				i++;
+			}
+			if (rem)
+			{
+				new_s[i] = rem + '0';
+				i++;
+			}
+			}
+			new_s[i] = '\0';
+			delete[] sec;
+			delete[] fir;
+			reverse(new_s);
+			return new_s;
 		}
+
 
 		bool operator > (const Des_String& other)
 		{
-			//return this->length > other.length;
 			if (strcmp(this->string1, other.string1) > 0)
 				return true;
 			else return false;
 		}
-
-
 	};
 
 	int main()
@@ -504,8 +634,9 @@ public:
 									break;
 
 								case 2:
-									*((Des_String*)strings[i - 1]) = *((Des_String*)strings[i - 1]) - *((Des_String*)strings[j - 1]);
-									cout << "Результат: " << (Des_String*)strings[i - 1]->get_string() << endl;
+								/*	*(Des_String*)strings[i - 1] = *(Des_String*)strings[i - 1] - *(Des_String*)strings[j - 1];
+									cout << "Результат: " << (Des_String*)strings[i]->get_string() << endl;*/
+									*(Des_String*)strings[i-1] - *(Des_String*)strings[j-1];
 									break;
 
 								case 3:
