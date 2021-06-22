@@ -5,23 +5,34 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
 template <class data>
-data search(data arr[], int n)
+data search(data arr[], int n, data otv)
 {
-	int j;
-	data p = 1000000000;
-	for (j = 0; j < n; j++)
-	{
-		if (arr[j] > 0 && arr[j] < p)
-			p = arr[j];
-	}
-	return p;
+	for (int i=0; i<n; i++)
+		if (arr != NULL)
+		{
+			otv = -1;
+			do
+			{
+				if (*min_element(arr, arr + n) >= 0)
+					otv = *min_element(arr, arr + n);
+			//	else erase(min_element(arr, arr + n));
+
+			} while (otv == -1);
+			return otv;
+		}
+		else
+		{
+			cout << "Неотрицательных элементов в массиве не обнаружено" << endl;
+			return -1;
+		}
 }
 
-template <class data2> class deque
+template <class data2>  class deque
 {
 private:
 	list <data2> dec;
@@ -33,7 +44,7 @@ public:
 
 	~deque()
 	{
-		
+
 	}
 
 	void del_deque()
@@ -88,7 +99,7 @@ public:
 };
 
 template <class data>
-void poisk(data *arr)
+void poisk(data *arr, data otv)
 {
 	int i, n;
 	cout << "Введите количество элементов массива: " << endl;
@@ -100,8 +111,10 @@ void poisk(data *arr)
 		cout << endl << "Введите " << i + 1 << " элемент:";
 		cin >> arr[i];
 	}
-	p = search(arr, n);
-	cout << endl << "Значение минимального неотрицательного элемента равно " << p << endl;
+	p = search(arr, n, otv);
+	if (p!= -1)
+		cout << endl << "Значение минимального неотрицательного элемента равно " << p << endl;
+	
 	delete[]arr;
 }
 
@@ -149,8 +162,8 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	double *d = nullptr;
-	char *c = nullptr;
+	double *d = nullptr, otvd=0;
+	char *c = nullptr, otvc=0;
 	char menu;
 	do
 	{
@@ -169,10 +182,10 @@ int main()
 			switch (menu)
 			{
 			case'1':
-				poisk(d);
+				poisk(d, otvd);
 				break;
 			case '2':
-				poisk(c);
+				poisk(c, otvc);
 				break;
 			} getchar(); getchar(); break;
 		case '2':
