@@ -1,7 +1,3 @@
-/* Вариант 5: Типы аргументов double и char.
-1. Поиск наименьшего неотрицательного элемента массива.
-2. АТД Дек с ограниченным выходом. Структура хранения – связный список */
-
 #include <iostream>
 #include <vector>
 #include <list>
@@ -12,24 +8,18 @@ using namespace std;
 template <class data>
 data search(data arr[], int n, data otv)
 {
-	for (int i=0; i<n; i++)
-		if (arr != NULL)
+	sort(arr, arr + n);
+	int i=0, j=-1;
+	for (i = n; i >= 0; --i)
+		do
 		{
-			otv = -1;
-			do
-			{
-				if (*min_element(arr, arr + n) >= 0)
-					otv = *min_element(arr, arr + n);
-			//	else erase(min_element(arr, arr + n));
-
-			} while (otv == -1);
-			return otv;
-		}
-		else
-		{
-			cout << "Неотрицательных элементов в массиве не обнаружено" << endl;
-			return -1;
-		}
+			if (arr[i] >= 0)
+				j = i;
+			else { }
+		} while (j == -1);
+		otv= *min_element(arr + j, arr + n);
+		return otv;
+		
 }
 
 template <class data2>  class deque
