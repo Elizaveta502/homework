@@ -8,17 +8,8 @@ using namespace std;
 template <class data>
 data search(data arr[], int n, data otv)
 {
-	sort(arr, arr + n);
-	int i=0, j=-1;
-	for (i = n-1; i >= 0; --i)
-		do
-		{
-			if (arr[i] >= 0)
-				j = i;
-			else { }
-		} while (j == -1);
-		otv= *min_element(arr + j, arr + n);
-		return otv;
+	remove_if (arr, arr+n, [](data x) {return x<0; });
+	return *min_element(arr, arr+n);
 		
 }
 
