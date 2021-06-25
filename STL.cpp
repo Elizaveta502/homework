@@ -1,3 +1,7 @@
+/* Вариант 5: Типы аргументов double и char.
+1. Поиск наименьшего неотрицательного элемента массива.
+2. АТД Дек с ограниченным выходом. Структура хранения – связный список */
+
 #include <iostream>
 #include <vector>
 #include <list>
@@ -5,13 +9,22 @@
 
 using namespace std;
 
-template <class data>
-data search(data arr[], int n, data otv)
+/*template <class T>
+T search(vector<T> arr, int n)
 {
-	remove_if (arr, arr+n, [](data x) {return x<0; });
+	vector<T> tmp;
+	copy_if(arr, arr+n, back_inserter(tmp), [](T x) {return x >= 0; });
 	return *min_element(arr, arr+n);
-		
+}*/
+
+template <class data>
+data search(vector<data> arr)
+{
+	vector<data> tmp;
+	copy_if(arr.begin(), arr.end(), back_inserter(tmp), [](data x) {return x >= 0; });
+	return *min_element(arr.begin(), arr.end());
 }
+
 
 template <class data2>  class deque
 {
@@ -80,7 +93,7 @@ public:
 };
 
 template <class data>
-void poisk(data *arr, data otv)
+void poisk(data *arr)
 {
 	int i, n;
 	cout << "Введите количество элементов массива: " << endl;
@@ -92,7 +105,7 @@ void poisk(data *arr, data otv)
 		cout << endl << "Введите " << i + 1 << " элемент:";
 		cin >> arr[i];
 	}
-	p = search(arr, n, otv);
+	p = search(arr);
 	if (p!= -1)
 		cout << endl << "Значение минимального неотрицательного элемента равно " << p << endl;
 	
@@ -143,8 +156,8 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	double *d = nullptr, otvd=0;
-	char *c = nullptr, otvc=0;
+	double *d = nullptr;
+	char *c = nullptr;
 	char menu;
 	do
 	{
@@ -163,10 +176,10 @@ int main()
 			switch (menu)
 			{
 			case'1':
-				poisk(d, otvd);
+				poisk(d);
 				break;
 			case '2':
-				poisk(c, otvc);
+				poisk(c);
 				break;
 			} getchar(); getchar(); break;
 		case '2':
