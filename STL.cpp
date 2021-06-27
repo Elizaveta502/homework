@@ -9,14 +9,6 @@
 
 using namespace std;
 
-/*template <class T>
-T search(vector<T> arr, int n)
-{
-	vector<T> tmp;
-	copy_if(arr, arr+n, back_inserter(tmp), [](T x) {return x >= 0; });
-	return *min_element(arr, arr+n);
-}*/
-
 template <class data>
 data search(vector<data> arr)
 {
@@ -100,26 +92,15 @@ void poisk(vector <data> arr)
 	cin >> n;
 	data p, x;
 
-/*	arr = new data[n];
-	for (i = 0; i < n; i++)
-	{
-		cout << endl << "Введите " << i + 1 << " элемент:";
-		cin >> arr[i];
-	}
-	p = search(arr);
-	if (p!= -1)
-		cout << endl << "Значение минимального неотрицательного элемента равно " << p << endl;
-	
-	delete[]arr;*/
-
-
 	arr.reserve(n);
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
+	for (int i = 0; i < n; i++) 
+		
+		{
+		cout <<endl<< "Введите элемент №" <<i+1<< endl;
 			cin >> x;
 			arr.push_back(x);
 		}
-	}
+	
 	p = search(arr);
 	cout << endl << "Значение минимального неотрицательного элемента равно " << p << endl;
 	arr.clear();
@@ -136,7 +117,7 @@ void DEQUE(deque <data> dec)
 		cout << "1. Добавить элемент вправо" << endl;
 		cout << "2. Добавить элемент влево " << endl;
 		cout << "3. Извлечь элемент с левого конца " << endl;
-		cout << "Конец тестирования" << endl;
+		cout << "4. Конец тестирования" << endl;
 		cin >> menu;
 		switch (menu)
 		{
@@ -169,10 +150,8 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-//	double *d = nullptr;
-//	char *c = nullptr;
-	vector <char> *c=nullptr;
-	vector <double> *d=nullptr;
+	vector <char> c;
+	vector <double> d;
 
 	char menu;
 	do
@@ -192,10 +171,10 @@ int main()
 			switch (menu)
 			{
 			case'1':
-				poisk(*d);
+				poisk(d);
 				break;
 			case '2':
-				poisk(*c);
+				poisk(c);
 				break;
 			} getchar(); getchar(); break;
 		case '2':
