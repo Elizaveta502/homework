@@ -14,7 +14,7 @@ data search(vector<data> arr)
 {
 	vector<data> tmp;
 	copy_if(arr.begin(), arr.end(), back_inserter(tmp), [](data x) {return x >= 0; });
-	return *min_element(arr.begin(), arr.end());
+	return *min_element(tmp.begin(), tmp.end());
 }
 
 
